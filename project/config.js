@@ -88,7 +88,8 @@ $(document).ready(function(){
 		console.log(restaurentData);
 		var htmlData = "<div class='main_block'>";
 		var defaultImg = "https://media-cdn.tripadvisor.com/media/photo-l/0c/e9/03/ef/photo9jpg.jpg";
-		var defaultName = "Chipotle"
+		var defaultName = "Chipotle";
+		var defaultEmail = "info@email.com";
 		if(!!restaurentData.length){
 			for(i=0;i<restaurentData.length;i++){
 				htmlData= htmlData+ "<div class='inner_block' > ";
@@ -103,7 +104,8 @@ $(document).ready(function(){
 				htmlData = htmlData +"<p class='street'>"+restaurentData[i].address_obj?.street1+"</p>";
 				htmlData = htmlData +"<p class='city'>"+restaurentData[i].address_obj?.city+"</p>";
 				htmlData = htmlData +"<p class='pin'>"+restaurentData[i].address_obj?.state +" "+restaurentData[i].address_obj?.postalcode+"</p>";
-				htmlData = htmlData +"<p class='contact'>"+restaurentData[i]?.phone +"|"+restaurentData[i]?.email+"</p>"
+				let email =!!restaurentData[i]?.email?restaurentData[i]?.email : defaultEmail;
+				htmlData = htmlData +"<p class='contact'>"+restaurentData[i]?.phone +"|"+email+"</p>";
 				htmlData = htmlData+"</div>";
 				htmlData = htmlData+ "<div class = 'right_block'></div>"
 				htmlData = htmlData+"</div>";
