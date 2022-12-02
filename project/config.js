@@ -3,12 +3,23 @@ $(document).ready(function(){
 		console.log("search clicked");
 		var zipcode = document.getElementById('query').value;
 		var allergies = [];
-		var location_id;
 		for(i=1;i<=4;i++){
 			if(!!document.getElementById('allergy'+i)?.checked)
 				allergies.push( document.getElementById('allergy'+i).value)
 		}
 		console.log(allergies,zipcode);
+		localStorage.setItem("zipcode",zipcode);
+		localStorage.setItem("allergies",allergies);
+		window.location.href ="loading.html";
+	
+		
+	});
+//calling API
+	function callApi(){
+		console.log("loading")
+		var location_id;
+		var zipcode = localStorage.getItem("zipcode");
+		var	allergies = localStorage.getItem("allergies");
 		const settings = {
 			"async": true,
 			"crossDomain": true,
@@ -21,12 +32,12 @@ $(document).ready(function(){
 		};
 		
 		$.ajax(settings).done(function (response) {
-			location_id = response.data.Typeahead_autocomplete.results[0].documentId;
+			location_id = response?.data?.Typeahead_autocomplete?.results[0]?.documentId;
 			let data=restaurent(location_id,allergies);
 			
 		});
-		
-	})
+	}
+
 	function restaurent(loc_id,allergies){
 	
 		const restaurent_API = {
@@ -39,7 +50,7 @@ $(document).ready(function(){
 				"X-RapidAPI-Host": "travel-advisor.p.rapidapi.com"
 			}
 		};
-		
+		//after API call storing the entire data into filterData variable
 		$.ajax(restaurent_API).done(function (response) {
 			var restaurent_data = response;
 			console.log(response);
@@ -82,18 +93,20 @@ $(document).ready(function(){
 		});
 		
 	}
+	//displaying the data on sample inner html page from the stored data
 	function onload(){
 		var restaurentData=localStorage.getItem("restaurent_data");
 		restaurentData = JSON.parse(restaurentData);
 		console.log(restaurentData);
 		var htmlData = "<div class='main_block'>";
-		var defaultImg = "https://media-cdn.tripadvisor.com/media/photo-l/0c/e9/03/ef/photo9jpg.jpg";
+		var defaultImg = "https://media-cdn.tripadvisor.com/media/photo-l/07/b0/5c/92/yama-zakura.jpg";
 		var defaultName = "Chipotle";
 		var defaultEmail = "info@email.com";
 		if(!!restaurentData.length){
 			for(i=0;i<restaurentData.length;i++){
 				htmlData= htmlData+ "<div class='inner_block' > ";
-				htmlData = htmlData+ "<div class='left_block'><img src="+restaurentData[i].photo?.images?.small?.url+" alt="+defaultImg+" >"
+				let image = !!restaurentData[i].photo?.images?.small?.url ? restaurentData[i].photo?.images?.small?.url : defaultImg
+				htmlData = htmlData+ "<div class='left_block'><img src="+image+" alt='image not found' >"
 				htmlData = htmlData+ "<a class = 'website' id='navigateTo' href="+restaurentData[i].website+" target = '_blank' >Go To Website</a></div>"
 				htmlData = htmlData+ "<div class = 'middle_block'>";
 				if (restaurentData[i].name) {
@@ -122,5 +135,12 @@ $(document).ready(function(){
 		window.open('', '_blank');
 
 	});
-	onload();
+	let url = window.location.href
+	console.log(url);
+	if(url.includes("loading")){
+		callApi();
+	}
+	else if(url.includes("sample")){
+		onload();
+	}
   });
