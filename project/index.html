@@ -73,7 +73,7 @@
              <input type="checkbox" id="allergy4" name="allergy4" value="Vegetarian Friendly">
              <label for="allergy4">Vegetarian</label><br><br>
 			<input type="search" id="query" name="q" placeholder="enter your City..." class="btn-book-a-form" >
-             <a id="search" class="btn-book-a-table" ><span>Search</span></a>
+             <a id="search" class="btn-book-a-table" style="cursor: pointer;" ><span>Search</span></a>
               </form>
             
             
@@ -132,20 +132,20 @@ who are on dietary restriction for other reasons too.
         </div>
         </div>
 
-        <form action="forms/contact.php" method="post" role="form" class="php-email-form p-3 p-md-4">
+        <form action="https://sheetdb.io/api/v1/vaj2te1bhvjzv" method="post" id="sheetdb-form" role="form" class="form">
           <div class="row">
             <div class="col-xl-6 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+              <input type="text" name="data[name]" class="form-control" id="name" placeholder="Your Name" required>
             </div>
             <div class="col-xl-6 form-group">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+              <input type="email" class="form-control" name="data[email]" id="email" placeholder="Your Email" required>
             </div>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+            <input type="text" class="form-control" name="data[subject]" id="subject" placeholder="Subject" required>
           </div>
           <div class="form-group">
-            <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+            <textarea class="form-control" name="data[message]" rows="5" placeholder="Message" required></textarea>
           </div>
           <div class="my-3">
             <div class="loading">Loading</div>
@@ -189,6 +189,22 @@ who are on dietary restriction for other reasons too.
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="config.js"></script>
+  <script>
+            var form = document.getElementById('sheetdb-form');
+        form.addEventListener("submit", e => {
+          e.preventDefault();
+          fetch(form.action, {
+              method : "POST",
+              body: new FormData(document.getElementById("sheetdb-form")),
+          }).then(
+              response => response.json()
+          ).then((html) => {
+            // you can put any JS code here
+            window.open('page2.html', '_blank');
+
+          });
+        });
+        </script>
 </body>
 
 </html>
