@@ -152,7 +152,7 @@ who are on dietary restriction for other reasons too.
             <div class="error-message"></div>
             <div class="sent-message">Your message has been sent. Thank you!</div>
           </div>
-          <div class="text-center"><button type="submit">Send Message</button></div>
+          <div class="text-center"><button type="submit" onclick="myFunction()">Send Message</button></div>
         </form>
         <!--End Contact Form -->
 
@@ -190,7 +190,8 @@ who are on dietary restriction for other reasons too.
   <script src="assets/js/main.js"></script>
   <script src="config.js"></script>
   <script>
-            var form = document.getElementById('sheetdb-form');
+  function myFunction() {
+var form = document.getElementById('sheetdb-form');
         form.addEventListener("submit", e => {
           e.preventDefault();
           fetch(form.action, {
@@ -200,10 +201,13 @@ who are on dietary restriction for other reasons too.
               response => response.json()
           ).then((html) => {
             // you can put any JS code here
-            window.open('page2.html', '_blank');
+            var myWindow = window.open("", "MsgWindow", "width=200,height=100");
+  myWindow.document.write("<p>Your message has been sent. Thank you!</p>");
+            
 
           });
         });
+      }
         </script>
 </body>
 
