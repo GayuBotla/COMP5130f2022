@@ -2,7 +2,7 @@ Student name : Gayathri Botla
 ID :02004577
 Github : GayuBotla
 
-Project title: Web Application to find nearby restaurants based on food allergies or intolerances
+Project title: Web Application to find restaurants based on food allergies or intolerances and location.
 
 Project Description: 
 There are many who suffer from food intolerance and allergies around us, yet there is no simple solution to find restaurants that have food options that cater
